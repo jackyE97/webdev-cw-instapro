@@ -68,3 +68,47 @@ export function uploadImage({ file }) {
     return response.json();
   });
 }
+
+//пост пользователя
+export function fetchPostsUser( id , { token }) {
+  return fetch(`${postsHost}/user-posts/${id}`, {
+    method: "GET",
+    headers: {
+      Authorization: token,
+    },
+  })
+    .then((response) => {
+      if (response.status === 401) {
+        throw new Error("Нет авторизации");
+      }
+
+      return response.json();
+    })
+    .then((data) => {
+      return data.posts;
+    });
+}
+
+//новый пост
+export const userPosts = ({ token, description, imageUrl }) => {
+  return fetch(postsHost, {
+    method: "POST",
+    body: JSON.stringify({
+      description,
+      imageUrl,
+    }),
+    headers: {
+      Authorization: token,
+  }
+  })
+    .then((response) => {
+      if (response.status === 500) {
+        throw new Error("Сервер упал");
+      } else if (response.status === 400) {
+        throw new Error("Плохой запрос");
+      } else {
+        return response.json();
+      }
+    })
+
+}
