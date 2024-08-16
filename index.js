@@ -68,7 +68,7 @@ export const goToPage = (newPage, data) => {
     else if (newPage === USER_POSTS_PAGE) {
       // TODO: реализовать получение постов юзера из API
       console.log("Открываю страницу пользователя: ", data.userId);
-      page = USER_POSTS_PAGE;
+      page = LOADING_PAGE;
       posts = [];
       renderApp();
       return fetchPostsUser(data.userId, { token: getToken() })
@@ -77,6 +77,9 @@ export const goToPage = (newPage, data) => {
           posts = newPosts;
           renderApp();
         })
+        .catch((error) => {
+          console.error(error);
+        });
     }
 
     else {
@@ -134,7 +137,7 @@ const renderApp = () => {
   if (page === USER_POSTS_PAGE) {
     // TODO: реализовать страницу фотографию пользвателя
     appEl.innerHTML = "Здесь будет страница фотографий пользователя";
-    return renderAuthPageComponent({
+    return renderPostsPageComponent({
       appEl,
     });
 
