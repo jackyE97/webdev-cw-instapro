@@ -28,9 +28,9 @@ export function registerUser({ login, password, name, imageUrl }) {
   return fetch(baseHost + "/api/user", {
     method: "POST",
     body: JSON.stringify({
-      login,
-      password,
-      name,
+      login: sanitizeHtml(login),
+      password: sanitizeHtml(password),
+      name: sanitizeHtml(name),
       imageUrl,
     }),
   }).then((response) => {
@@ -110,5 +110,43 @@ export const userPosts = ({ token, description, imageUrl }) => {
         return response.json();
       }
     })
-
 }
+
+//лайки
+export const getLike = (postId, { token }) => {
+  return fetch(`${postsHost}/${postId}/like`, {
+    method: "POST",
+    headers: {
+      Authorization: token,
+    }
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`Ошибка ${response.status}: ${response.statusText}`);
+      }
+      return response.json();
+    })
+    .catch((error) => {
+      console.error("Ошибка при установке лайка:", error);
+      throw error;
+    });
+};
+
+export const getDislike = (postId, { token }) => {
+  return fetch(`${postsHost}/${postId}/dislike`, {
+    method: "POST",
+    headers: {
+      Authorization: token,
+    }
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`Ошибка ${response.status}: ${response.statusText}`);
+      }
+      return response.json();
+    })
+    .catch((error) => {
+      console.error("Ошибка при удалении лайка:", error);
+      throw error;
+    });
+};

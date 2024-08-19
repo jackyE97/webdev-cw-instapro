@@ -196,3 +196,18 @@
   width: 100%;
   text-align: center;
 }
+
+li {
+  list-style-type: none;
+}
+.add-form__text {
+  resize: none;
+  width: 100%;    
+  box-sizing: border-box;
+  padding: 15px;
+  font-size: 14px;
+  line-height: 18px;
+  border: none;
+  border-radius: 8px;
+  background-color: #e8e8e8;
+}

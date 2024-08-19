@@ -1,6 +1,7 @@
 import { USER_POSTS_PAGE } from "../routes.js";
 import { renderHeaderComponent } from "./header-component.js";
-import { posts, goToPage } from "../index.js";
+import { posts, goToPage, getToken } from "../index.js";
+import { getDislike, getLike } from "../api.js";
 
 export function renderPostsPageComponent({ appEl }) {
   // TODO: реализовать рендер постов из api
@@ -22,10 +23,12 @@ export function renderPostsPageComponent({ appEl }) {
                     </div>
                     <div class="post-likes">
                     <button data-post-id=${post.id} data-liked="${post.isLiked}" class="like-button">
-                        <img src="./assets/images/like-active.svg">
+                    ${post.isLiked ? `<img src="./assets/images/like-active.svg"></img>` : `<img src="./assets/images/like-not-active.svg"></img>`}
                       </button>
                       <p class="post-likes-text">
-                        Нравится: <strong>2</strong>
+                      Нравится: <strong>
+                      ${post.likes.length === 0 ? 0 : post.likes.length === 1 ? post.likes[0].name : post.likes[(post.likes.length - 1)].name + ' и еще ' + (post.likes.length - 1)}
+                      </strong>
                       </p>
                     </div>
                     <p class="post-text">
@@ -60,4 +63,49 @@ export function renderPostsPageComponent({ appEl }) {
       });
     });
   }
+  function getLikePost() {
+    const likesButtons = document.querySelectorAll('.like-button');
+
+    likesButtons.forEach((button) => {
+      button.addEventListener("click", (event) => {
+        event.stopPropagation();
+
+        const id = button.dataset.postId; // Получаем id поста 
+        const isLiked = button.dataset.liked; // Узнаем поставил ли пользователь лайк
+        const index = posts.findIndex((post) => post.id === id); // Находим индекс поста в массиве posts
+        console.log(user);
+        console.log(id);
+        console.log(isLiked);
+        console.log(index);
+        if (user === null) {
+          alert("Вы не авторизованы!")
+        }
+        else if (index === -1) {
+          console.error("Ошибка: пост не найден");
+          return;
+        }
+
+        else if (isLiked === 'false') {
+          getLike(id, { token: getToken() })
+            .then((updatedPost) => {
+              const newPage = userView ? USER_POSTS_PAGE : POSTS_PAGE;
+              goToPage(newPage, { userId: posts[0].user.id })
+            })
+            .catch((error) => {
+              console.error("Ошибка при добавлении лайка:", error);
+            });
+        } else {
+          getDislike(id, { token: getToken() })
+            .then((updatedPost) => {
+              const newPage = userView ? USER_POSTS_PAGE : POSTS_PAGE;
+              goToPage(newPage, { userId: posts[0].user.id });
+            })
+            .catch((error) => {
+              console.error("Ошибка при удалении лайка:", error);
+            });
+        }
+      });
+    });
+  }
+  getLikePost();
 }
