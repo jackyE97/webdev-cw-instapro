@@ -1,6 +1,8 @@
 // Замени на свой, чтобы получить независимый от других набор данных.
+
+import { sanitizeHtml } from "./helpers.js";
 // "боевая" версия инстапро лежит в ключе prod
-const personalKey = "prod";
+const personalKey = "jacky";
 const baseHost = "https://webdev-hw-api.vercel.app";
 const postsHost = `${baseHost}/api/v1/${personalKey}/instapro`;
 
@@ -113,8 +115,8 @@ export const userPosts = ({ token, description, imageUrl }) => {
 }
 
 //лайки
-export const getLike = (postId, { token }) => {
-  return fetch(`${postsHost}/${postId}/like`, {
+export const getLike = (id, { token }) => {
+  return fetch(`${postsHost}/${id}/like`, {
     method: "POST",
     headers: {
       Authorization: token,
@@ -132,8 +134,8 @@ export const getLike = (postId, { token }) => {
     });
 };
 
-export const getDislike = (postId, { token }) => {
-  return fetch(`${postsHost}/${postId}/dislike`, {
+export const getDislike = (id, { token }) => {
+  return fetch(`${postsHost}/${id}/dislike`, {
     method: "POST",
     headers: {
       Authorization: token,
