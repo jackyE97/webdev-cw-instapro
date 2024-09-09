@@ -1,6 +1,6 @@
 import { POSTS_PAGE, USER_POSTS_PAGE } from "../routes.js";
 import { renderHeaderComponent } from "./header-component.js";
-import { posts, goToPage, getToken, token } from "../index.js";
+import { posts, goToPage, getToken } from "../index.js";
 import { dislike, like, deletePost } from "../api.js";
 import { user } from "../index.js";
 import { sanitizeHtml } from "../helpers.js";
@@ -49,7 +49,7 @@ export function renderPostsPageComponent({ singleUserMode }) {
         isAuthor
           ? `<div class="bin">
         <button class="delete-button" data-post-id="${post.id}">
-          <img src="./assets/images/bin.svg" alt="Удалить">
+        <img src="./assets/images/bin.svg" alt="Удалить">
         </button>
         <p class="post-delete-text"><strong>Удалить пост</strong></p>
       </div>`

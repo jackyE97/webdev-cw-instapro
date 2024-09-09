@@ -211,3 +211,26 @@ li {
   border-radius: 8px;
   background-color: #e8e8e8;
 }
+.bin {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.delete-button img {
+  border: none;
+  background-color: transparent;
+  width: 15px;
+  height: 15px;
+  display: block;
+  outline: none;
+  cursor: pointer;
+  padding-right: 8px;
+}
+
+button {
+  border: none;
+  background: none;
+  padding: 0;
+}
+
