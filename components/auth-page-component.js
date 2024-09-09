@@ -1,5 +1,4 @@
 import { loginUser, registerUser } from "../api.js";
-import { sanitizeHtml } from "../helpers.js";
 import { renderHeaderComponent } from "./header-component.js";
 import { renderUploadImageComponent } from "./upload-image-component.js";
 
