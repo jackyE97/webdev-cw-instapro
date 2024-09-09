@@ -1,4 +1,5 @@
 import { loginUser, registerUser } from "../api.js";
+import { sanitizeHtml } from "../helpers.js";
 import { renderHeaderComponent } from "./header-component.js";
 import { renderUploadImageComponent } from "./upload-image-component.js";
 
@@ -12,14 +13,16 @@ export function renderAuthPageComponent({ appEl, setUser }) {
           <div class="header-container"></div>
           <div class="form">
               <h3 class="form-title">
-                ${isLoginMode
+                ${
+                  isLoginMode
                     ? "Вход в&nbsp;Instapro"
                     : "Регистрация в&nbsp;Instapro"
                 }
                 </h3>
               <div class="form-inputs">
     
-                  ${!isLoginMode
+                  ${
+                    !isLoginMode
                       ? `
                       <div class="upload-image-container"></div>
                       <input type="text" id="name-input" class="input" placeholder="Имя" />
@@ -52,8 +55,6 @@ export function renderAuthPageComponent({ appEl, setUser }) {
 
     appEl.innerHTML = appHtml;
 
-    // Не вызываем перерендер, чтобы не сбрасывалась заполненная форма
-    // Точечно обновляем кусочек дом дерева
     const setError = (message) => {
       appEl.querySelector(".form-error").textContent = message;
     };
