@@ -196,3 +196,41 @@
   width: 100%;
   text-align: center;
 }
+
+li {
+  list-style-type: none;
+}
+.add-form__text {
+  resize: none;
+  width: 100%;    
+  box-sizing: border-box;
+  padding: 15px;
+  font-size: 14px;
+  line-height: 18px;
+  border: none;
+  border-radius: 8px;
+  background-color: #e8e8e8;
+}
+.bin {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.delete-button img {
+  border: none;
+  background-color: transparent;
+  width: 15px;
+  height: 15px;
+  display: block;
+  outline: none;
+  cursor: pointer;
+  padding-right: 8px;
+}
+
+button {
+  border: none;
+  background: none;
+  padding: 0;
+}
+
